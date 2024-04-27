@@ -12,3 +12,8 @@ spring:
     hibernate:
       ddl-auto: create
     show-sql: true
+
+logging:
+  level:
+    com.example.logtest: info
+    org.hibernate.SQL: debug

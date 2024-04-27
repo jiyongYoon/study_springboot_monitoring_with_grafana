@@ -1,0 +1,23 @@
+version: "3"
+services:
+  log-test-redis:
+    container_name: log-test-redis
+    image: redis:6.2.12-alpine
+    expose:
+      - 6379
+    networks:
+      - log-test
+    restart: always
+  log-test-boot:
+    container_name: log-test-boot
+    image: log-test-boot
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    networks:
+      - log-test
+
+networks:
+  log-test:
