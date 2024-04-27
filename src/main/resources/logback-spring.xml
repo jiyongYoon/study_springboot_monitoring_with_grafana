@@ -16,9 +16,9 @@
   </springProfile>
 
   <springProfile name="default, dev, prod, own">
-    <property name="infoLogPath" value="logs/backend/info"/>
-    <property name="warnLogPath" value="logs/backend/warn"/>
-    <property name="errorLogPath" value="logs/backend/error"/>
+    <property name="infoLogPath" value="./logs/backend/info"/>
+    <property name="warnLogPath" value="./logs/backend/warn"/>
+    <property name="errorLogPath" value="./logs/backend/error"/>
     <property name="fileNamePattern" value="%d{yyyy-MM-dd}_%i.log"/>
     <property name="logPattern" value="%d{HH:mm:ss.SSS} [%20thread] %-5level %-53logger{36} - %msg%n"/>
 

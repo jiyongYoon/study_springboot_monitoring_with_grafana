@@ -1,0 +1,31 @@
+positions:
+  filename: /tmp/positions.yaml # 동기화 작업을 이루기 위해 promtail이 읽은 마지막 로그 정보를 저장하는 곳
+
+clients:
+  - url: http://log-loki:3100/loki/api/v1/push # push할 Loki의 주소 ( ip는 container-name )
+
+scrape_configs:
+
+  - job_name: info
+    static_configs:
+      - targets:
+          - log-loki # container-name
+        labels:
+          job: info_logs
+          __path__: ./logs/info/*.log # info 폴더 내에 log 파일들 모두 수집
+
+  - job_name: warn
+    static_configs:
+      - targets:
+          - log-loki # container-name
+        labels:
+          job: warn_logs
+          __path__: ./logs/warn/*.log # warn 폴더 내에 log 파일들 모두 수집
+
+  - job_name: error
+    static_configs:
+      - targets:
+          - log-loki # container-name
+        labels:
+          job: error_logs
+          __path__: ./logs/error/*.log # error 폴더 내에 log 파일들 모두 수집

@@ -8,14 +8,47 @@ services:
     networks:
       - log-test
     restart: always
+
   log-test-boot:
     container_name: log-test-boot
     image: log-test-boot
     build:
       context: .
       dockerfile: Dockerfile
+    volumes:
+      - ./logs/backend/info:/logs/backend/info
+      - ./logs/backend/warn:/logs/backend/warn
+      - ./logs/backend/error:/logs/backend/error
     ports:
       - 8080:8080
+    networks:
+      - log-test
+
+  log-grafana:
+    container_name: log-grafana
+    image: grafana/grafana:latest
+    user: "$UID:$GID" # grafana image 내에 /var/lib/grafana의 쓰기작업을 위한 설정
+    ports:
+      - 3000:3000
+    volumes:
+      - ./grafana-data:/var/lib/grafana
+
+  log-loki:
+    container_name: log-loki
+    image: grafana/loki:latest
+    ports:
+      - 3100:3100
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - log-test
+
+  log-promtail:
+    container_name: log-promtail
+    image: grafana/promtail:latest
+    volumes:
+      - ./logs/backend:/logs
+      - ./promtail-config.yml:/etc/promtail/config.yml
+    command: -config.file=/etc/promtail/config.yml
     networks:
       - log-test
 
