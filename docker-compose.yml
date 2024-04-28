@@ -52,5 +52,13 @@ services:
     networks:
       - log-test
 
+  log-prometheus:
+    container_name: log-prometheus
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - 9090:9090
+
 networks:
   log-test:
