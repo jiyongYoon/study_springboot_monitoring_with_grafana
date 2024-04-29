@@ -5,9 +5,9 @@ services:
     image: redis:6.2.12-alpine
     expose:
       - 6379
+    restart: always
     networks:
       - log-test
-    restart: always
 
   log-test-boot:
     container_name: log-test-boot
@@ -32,6 +32,8 @@ services:
       - 3000:3000
     volumes:
       - ./grafana-data:/var/lib/grafana
+    networks:
+      - log-test
 
   log-loki:
     container_name: log-loki
@@ -59,6 +61,8 @@ services:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
       - 9090:9090
+    networks:
+      - log-test
 
 networks:
   log-test:

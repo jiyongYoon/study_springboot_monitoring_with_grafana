@@ -1,12 +1,17 @@
 package com.example.logtest.controller;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequiredArgsConstructor
 @Slf4j
 public class LogTestController {
+
+    private final RedisTemplate<String, String> redisTemplate;
 
     @GetMapping("/info")
     public void info() {
@@ -35,5 +40,14 @@ public class LogTestController {
         } catch (Exception e) {
             log.error("log.error!!!!", e);
         }
+    }
+
+    @GetMapping("/redis")
+    public void redis() {
+        for (int i = 0; i < 1000; i++) {
+            redisTemplate.opsForValue()
+                    .increment("key");
+        }
+        log.info("redis insert finished!!");
     }
 }
