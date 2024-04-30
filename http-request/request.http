@@ -1,0 +1,10 @@
+###
+POST http://localhost/api/save
+Content-Type: application/json
+
+{
+  "name": "log-1"
+}
+
+###
+GET http://localhost/api/e

@@ -1,11 +1,10 @@
 package com.example.logtest.controller;
 
+import com.example.logtest.service.LogService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class LogTestController {
 
     private final RedisTemplate<String, String> redisTemplate;
+    private final LogService logService;
 
     @GetMapping("/info")
     public void info() {
@@ -51,5 +51,10 @@ public class LogTestController {
                     .increment("key");
         }
         log.info("redis insert finished!!");
+    }
+
+    @PostMapping("/save")
+    public LogDto.Response save(@RequestBody LogDto.Request request) {
+        return logService.save(request);
     }
 }

@@ -44,6 +44,8 @@ services:
       - ./logs/backend/info:/logs/backend/info
       - ./logs/backend/warn:/logs/backend/warn
       - ./logs/backend/error:/logs/backend/error
+    environment:
+      - TZ=Asia/Seoul
     ports:
       - 8080:8080
     networks:
