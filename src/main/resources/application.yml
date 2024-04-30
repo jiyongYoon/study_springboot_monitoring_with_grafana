@@ -1,13 +1,12 @@
 spring:
   datasource:
-    datasource:
-      url: jdbc:h2:mem:test
-      username: sa
-      password:
-      h2:
-        console:
-          path: /h2-console
-          enabled: true
+    url: jdbc:h2:mem:test
+    username: sa
+    password:
+  h2:
+    console:
+      path: /h2-console
+      enabled: true
   jpa:
     hibernate:
       ddl-auto: create
@@ -16,6 +15,7 @@ spring:
   data:
     redis:
       host: log-test-redis # docker container name
+#      host: localhost
       port: 6379
 
 management:
