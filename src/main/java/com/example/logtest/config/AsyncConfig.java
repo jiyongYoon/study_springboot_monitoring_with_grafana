@@ -1,6 +1,6 @@
 package com.example.logtest.config;
 
-import com.example.logtest.decorator.MDCTaskDecorator;
+import com.example.logtest.decorator.ThreadLocalTaskDecorator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.TaskExecutor;
@@ -14,7 +14,7 @@ public class AsyncConfig {
     @Bean
     public TaskExecutor taskExecutor() {
         ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
-        taskExecutor.setTaskDecorator(new MDCTaskDecorator()); // 데코레이터 설정
+        taskExecutor.setTaskDecorator(new ThreadLocalTaskDecorator()); // 데코레이터 설정
         return taskExecutor;
     }
 }

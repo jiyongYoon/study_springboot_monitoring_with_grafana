@@ -41,6 +41,7 @@ public class LogTestController {
             throw new RuntimeException("RuntimeException!!!!");
         } catch (Exception e) {
             log.error("log.error!!!!", e);
+            throw e;
         }
     }
 
