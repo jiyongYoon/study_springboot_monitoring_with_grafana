@@ -14,8 +14,8 @@ spring:
 
   data:
     redis:
-#      host: log-test-redis # docker container name
-      host: localhost
+      host: log-test-redis # docker container name
+#      host: localhost
       port: 6379
 
 management:

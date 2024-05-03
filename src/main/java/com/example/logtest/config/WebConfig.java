@@ -1,6 +1,6 @@
 package com.example.logtest.config;
 
-import com.example.logtest.interceptor.RequestLogInterceptor;
+import com.example.logtest.log.interceptor.RequestLogInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

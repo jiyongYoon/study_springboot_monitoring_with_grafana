@@ -35,6 +35,31 @@ public class LogService {
                 .build();
     }
 
+    @Transactional
+    public LogDto.Response saveWarn(LogDto.Request request) {
+        LogEntity requestLog = LogEntity.builder().name(request.name()).build();
+        LogEntity savedLog = logRepository.save(requestLog);
+
+        logServiceProvider.getObject().printLog(savedLog);
+
+        logServiceProvider.getObject().saveAnotherLog(request);
+        logServiceProvider.getObject().saveAnotherLog(request);
+        logServiceProvider.getObject().saveAnotherLog(request);
+        logServiceProvider.getObject().saveAnotherLog(request);
+        logServiceProvider.getObject().saveAnotherLog(request);
+
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return LogDto.Response.builder()
+                .id(savedLog.getId())
+                .name(savedLog.getName())
+                .build();
+    }
+
     @Async
     public void printLog(LogEntity logEntity) {
         log.info("save! id={}, name={}", logEntity.getId(), logEntity.getName());

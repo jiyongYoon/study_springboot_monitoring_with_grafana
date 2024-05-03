@@ -7,4 +7,39 @@ Content-Type: application/json
 }
 
 ###
+POST http://localhost/api/save/warn
+Content-Type: application/json
+
+{
+  "name": "log-1"
+}
+
+###
+POST http://localhost:8080/api/save/이름11
+Content-Type: application/json
+
+
+###
+POST http://localhost:8080/api/save?name='이름22'
+Content-Type: application/json
+
+
+###
 GET http://localhost/api/e
+
+###
+POST http://localhost:8084/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "jiyong.yoon@wizcore.co.kr",
+  "password": "string22"
+}
+
+###
+GET http://localhost:8084/api/account/notify
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaXlvbmcueW9vbkB3aXpjb3JlLmNvLmtyIiwiaWF0IjoxNzE0NjQwMjEzLCJleHAiOjE3MTQ2NDM4MTN9.1HJtsp2sykN-w0b9O8NRhqrOJiK8ci9N_bpniFjWIxQ
+
+###
+GET http://localhost:8084/api/account/profiles

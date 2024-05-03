@@ -1,12 +1,5 @@
 package com.example.logtest.log.context.id;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
-import org.springframework.boot.actuate.endpoint.SecurityContext;
-import org.springframework.web.context.request.RequestContextHolder;
-
 //@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "type")
 //@JsonSubTypes({
 //        @JsonSubTypes.Type(name = "AnonymousLogId", value = AnonymousLogId.class),

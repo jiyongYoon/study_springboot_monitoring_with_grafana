@@ -1,7 +1,7 @@
 package com.example.logtest.log;
 
+import com.example.logtest.log.context.ThreadLocalHolder;
 import com.example.logtest.log.context.LogContext;
-import com.example.logtest.log.context.LogContextLocalHolder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -16,7 +16,7 @@ public class Logger {
     private static final String EX_PREFIX = "<X--";
 
     public void methodCall(String className, String methodName) {
-        LogContext logContext = LogContextLocalHolder.getInstance().get();
+        LogContext logContext = ThreadLocalHolder.getThreadLocalLogContextHolder().get();
 
         logContext.increaseCall();
         log.info("[{}]  {}",
@@ -24,11 +24,11 @@ public class Logger {
                 formattedClassAndMethod(logContext.depthPrefix(CALL_PREFIX), className, methodName)
         );
 
-        LogContextLocalHolder.getInstance().set(logContext);
+        ThreadLocalHolder.getThreadLocalLogContextHolder().set(logContext);
     }
 
     public void methodReturn(String className, String methodName) {
-        LogContext logContext = LogContextLocalHolder.getInstance().get();
+        LogContext logContext = ThreadLocalHolder.getThreadLocalLogContextHolder().get();
 
         log.info("[{}]  {}  time={}ms  ",
                 formattedLogInfo(logContext.logId()),
@@ -37,11 +37,11 @@ public class Logger {
         );
         logContext.decreaseCall();
 
-        LogContextLocalHolder.getInstance().set(logContext);
+        ThreadLocalHolder.getThreadLocalLogContextHolder().set(logContext);
     }
 
     public void throwException(String className, String methodName, Throwable exception) {
-        LogContext logContext = LogContextLocalHolder.getInstance().get();
+        LogContext logContext = ThreadLocalHolder.getThreadLocalLogContextHolder().get();
         log.error("[{}]  {}  time={}ms,  throws {}  ",
                 formattedLogInfo(logContext.logId()),
                 formattedClassAndMethod(logContext.depthPrefix(EX_PREFIX), className, methodName),

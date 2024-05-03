@@ -1,5 +1,6 @@
-package com.example.logtest.log;
+package com.example.logtest.log.aop;
 
+import com.example.logtest.log.Logger;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

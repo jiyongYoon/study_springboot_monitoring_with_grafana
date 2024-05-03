@@ -1,6 +1,6 @@
 package com.example.logtest.config;
 
-import com.example.logtest.decorator.ThreadLocalTaskDecorator;
+import com.example.logtest.log.decorator.ThreadLocalTaskDecorator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.TaskExecutor;

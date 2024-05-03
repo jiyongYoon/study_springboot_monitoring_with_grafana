@@ -1,4 +1,4 @@
-package com.example.logtest.filter;
+package com.example.logtest.log.filter;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;

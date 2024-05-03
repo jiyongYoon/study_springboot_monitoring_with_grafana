@@ -58,4 +58,21 @@ public class LogTestController {
     public LogDto.Response save(@RequestBody LogDto.Request request) {
         return logService.save(request);
     }
+
+    @PostMapping("/save/{name}")
+    public LogDto.Response savePathVariable(@PathVariable String name) {
+        LogDto.Request request = new LogDto.Request(name);
+        return logService.save(request);
+    }
+
+    @PostMapping("/saveQuery")
+    public LogDto.Response saveQuery(@RequestParam String name) {
+        LogDto.Request request = new LogDto.Request(name);
+        return logService.save(request);
+    }
+
+    @PostMapping("/save/warn")
+    public LogDto.Response saveWarn(@RequestBody LogDto.Request request) {
+        return logService.saveWarn(request);
+    }
 }
