@@ -4,18 +4,14 @@ import java.util.UUID;
 
 public class AnonymousLogId implements LogId {
 
-    private final String id;
+    private final String requestId;
 
-    public AnonymousLogId(String id) {
-        this.id = id;
-    }
-
-    public static AnonymousLogId randomId() {
-        return new AnonymousLogId(UUID.randomUUID().toString().substring(0, 8));
+    public AnonymousLogId(String requestId) {
+        this.requestId = requestId;
     }
 
     @Override
     public String logId() {
-        return id + "(anonymous)";
+        return requestId + "(anonymous)";
     }
 }

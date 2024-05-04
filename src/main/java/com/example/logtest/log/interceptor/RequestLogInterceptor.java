@@ -5,6 +5,7 @@ import com.example.logtest.log.context.LogContext;
 import com.example.logtest.log.context.ThreadLocalHolder;
 import com.example.logtest.log.context.QueryCounter;
 import com.example.logtest.log.context.id.AuthenticatedLogId;
+import com.example.logtest.log.context.id.LogId;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,11 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.cors.CorsUtils;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.mvc.ParameterizableViewController;
+import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -25,6 +30,9 @@ public class RequestLogInterceptor implements HandlerInterceptor {
 
     private static final int QUERY_COUNT_WARNING_STANDARD = 5;
     private static final int TOTAL_TIME_WARNING_STANDARD_MS = 2500;
+
+    private static final List<String> swaggerUriList = Arrays.asList("/swagger-resources", "/v2/api-docs");
+
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -43,8 +51,7 @@ public class RequestLogInterceptor implements HandlerInterceptor {
 
         MDC.put("request_id", logId);
 
-//        LogContext logContext = new LogContext(new AnonymousLogId(logId));
-        LogContext logContext = new LogContext(new AuthenticatedLogId(logId));
+        LogContext logContext = new LogContext(LogId.from(java.util.Optional.empty(), logId)); // userId는 jwt validation 된 객체의 id
         ThreadLocalHolder.getThreadLocalLogContextHolder().set(logContext);
 
         RequestInfoLogData requestInfoLogData = new RequestInfoLogData(logContext.logId(), request);
@@ -62,6 +69,24 @@ public class RequestLogInterceptor implements HandlerInterceptor {
         String className = handler.getMethod().getDeclaringClass().getSimpleName();
         String methodName = handler.getMethod().getName();
         return className + "." + methodName + "()";
+    }
+
+    // swagger가 붙으면 cors 요청이나 error처럼 해당 요청들도 같이 걸러야 swagger를 띄울 때 요청들은 로그에 남지 않는다.
+    private boolean isSwaggerRequest(HttpServletRequest request, Object handler) {
+        boolean handlerCheck = handler instanceof ParameterizableViewController // 뷰 기반의 요청을 처리하고 뷰를 렌더링 하는데 사용하는 클래스
+                || handler instanceof ResourceHttpRequestHandler; // 정적 리소스 제공하는 클래스
+
+        String requestURI = request.getRequestURI();
+
+        boolean uriCheck = false;
+        for (String swaggerUri : swaggerUriList) {
+            if (requestURI.startsWith(swaggerUri)) {
+                uriCheck = true;
+                break;
+            }
+        }
+
+        return handlerCheck || uriCheck;
     }
 
     @Override

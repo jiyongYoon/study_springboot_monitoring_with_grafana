@@ -7,9 +7,9 @@ public class AuthenticatedLogId implements LogId {
     private final String userId;
     private final String requestId;
 
-    public AuthenticatedLogId(Object requestId) {
-        this.userId = UUID.randomUUID().toString().substring(0, 8);
-        this.requestId = String.valueOf(requestId);
+    public AuthenticatedLogId(Object userId, String requestId) {
+        this.userId = String.valueOf(userId);
+        this.requestId = requestId;
     }
 
     @Override

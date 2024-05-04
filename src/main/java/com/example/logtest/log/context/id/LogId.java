@@ -1,16 +1,22 @@
 package com.example.logtest.log.context.id;
 
+import java.util.Optional;
+
 //@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "type")
 //@JsonSubTypes({
 //        @JsonSubTypes.Type(name = "AnonymousLogId", value = AnonymousLogId.class),
 //        @JsonSubTypes.Type(name = "AuthenticatedLogId", value = AuthenticatedLogId.class)
 //})
 public interface LogId {
-    /*
-    static LogId fromRequest(UserDetailsImpl 이런식으로) {
-        jwt 인증한 securitycontext에서 꺼내서 만들기
+
+    static LogId from(Optional<Long> userId, String requestId) {
+        if (userId.isPresent()) {
+            return new AuthenticatedLogId(userId.get(), requestId);
+        } else {
+            return new AnonymousLogId(requestId);
+        }
     }
-     */
+
 
     String logId();
 }
